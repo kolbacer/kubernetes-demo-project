@@ -33,6 +33,8 @@ let heroes = [
     {id: 5, name: "Samurai Jack"},
 ]
 
+let count = 5
+
 app.get("/api/heroes", (req, res) => {
     const name = req.query.name
 
@@ -63,8 +65,10 @@ app.put("/api/heroes", (req, res) => {
 
 app.post("/api/heroes", (req, res) => {
     const hero = req.body
-    heroes.push(hero)
-    res.send(hero);
+    count += 1
+    let newHero = {id: count, name: hero.name}
+    heroes.push(newHero)
+    res.send(newHero);
 });
 
 app.delete("/api/heroes/:id", (req, res) => {
