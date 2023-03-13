@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-js
+  template:
+    metadata:
+      labels:
+        app: node-js
+    spec:
+      containers:
+        - name: backend-container
+          image: kolbacer/backend
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular-js
+  template:
+    metadata:
+      labels:
+        app: angular-js
+    spec:
+      containers:
+        - name: frontend-container
+          image: kolbacer/frontend
+          ports:
+            - containerPort: 4200
+          env:
+            - name: API_HOSTIP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP    # in minikube (hyperv driver) serviceIP=clusterIP=nodeIP
+            - name: API_BASEURL
+              value: "http://$(API_HOSTIP)"   # inject http://
+            - name: API_PORT
+              value: "30007"                  # backend-service nodePort
